@@ -1,26 +1,56 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react'
+// import axios from 'axios';
+// import React, { useEffect, useState } from 'react'
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Layout from './Pages/Layout';
+import Home from './Pages/Home';
+import Register from './Pages/Auth/Register';
+import Login from './Pages/Auth/Login';
+import { useContext } from 'react';
+import { AppContext } from './Context/AppContext';
 
 export default function App() {
 
-  const [data, setData] = useState([])
+// const [data, setData] = useState([])
 
-  const getdata = async () => {
-    try {
-      const res = await axios.get('http://127.0.0.1:8000/api/posts');
-      setData(res.data);
-    }catch(err){
-      console.log9(err)
-    }
-  }
+//   const getdata = async () => {
+//     try {
+//       const res = await axios.get('http://127.0.0.1:8000/api/posts');
+//       setData(res.data);
 
-  useEffect(() => {
-    getdata();
-  })
+//       if(res.status === 200){
+//         //do sometjing
+//       }
+//     }catch(err){
+//       console.log(err)
+//     }
+//   }
 
-  return (
-    <div className='bg-gray-500'>
-      <pre>{JSON.stringify(data, null, 2)}</pre>
-    </div>
-  )
+//   useEffect(() => {
+//     getdata();
+//   })
+
+    const {user} = useContext(AppContext);
+
+    return (
+        <div>
+            <BrowserRouter>
+                <Routes>
+                    {/* wrapper */}
+                    <Route path="/" element={<Layout />}>
+                        {/* index route */}
+                        <Route index element={<Home />} />
+
+                        <Route
+                            path="/register"
+                            element={user.name ? <Home /> : <Register />}
+                        />
+                        <Route
+                            path="/login"
+                            element={user.name ? <Home /> : <Login />}
+                        />
+                    </Route>
+                </Routes>
+            </BrowserRouter>
+        </div>
+    );
 }

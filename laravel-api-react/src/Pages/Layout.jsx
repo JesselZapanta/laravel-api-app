@@ -1,9 +1,32 @@
 import React, { useContext } from "react";
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 import { AppContext } from "../Context/AppContext";
+import axios from "axios";
 
 export default function Layout() {
-    const { user } = useContext(AppContext);
+    const { user,setUser, token, setToken } = useContext(AppContext);
+
+    const navigate = useNavigate();
+
+    const handleLogout = async (e) => {
+        e.preventDefault();
+        try {
+            const res = await axios.post("/api/logout", {}, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+            if (res.status === 200) {
+                setUser(null);
+                setToken(null);
+                localStorage.removeItem("token");
+                navigate('/');
+            }
+        } catch (err) {
+            console.log(err);
+        }
+    };
+    
 
     return (
         <>
@@ -13,10 +36,13 @@ export default function Layout() {
                         Home
                     </Link>
                     <div className="flex gap-4">
-                        {user.name ? (
+                        {user ? (
                             <>
-                                <div className="text-slate-400">
+                                <div className="text-slate-400 flex gap-4 items-center">
                                     <p>Welcome back {user.name}</p>
+                                    <form>
+                                        <button className="nav-link" onClick={handleLogout}>Log out</button>
+                                    </form>
                                 </div>
                             </>
                         ) : (

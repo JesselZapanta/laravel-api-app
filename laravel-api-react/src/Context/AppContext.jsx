@@ -6,7 +6,7 @@ export const AppContext = createContext();
 export default function AppProvider({children}) {
 
     const [token, setToken] = useState(localStorage.getItem('token'));
-    const [user, setUser] = useState({});
+    const [user, setUser] = useState(null);
 
     const getUser = async () => {
         const res = await axios.get('/api/user', {
@@ -14,7 +14,9 @@ export default function AppProvider({children}) {
                 Authorization: `Bearer ${token}`,
             }
         });
-        setUser(res.data);
+        if(res.status === 200){
+            setUser(res.data);
+        }
     }
     useEffect(() => {
         if(token){
@@ -23,7 +25,7 @@ export default function AppProvider({children}) {
     }, [token]);
 
     return (
-        <AppContext.Provider value={{ token, setToken, user }}>
+        <AppContext.Provider value={{ token, setToken, user, setUser }}>
             {children}
         </AppContext.Provider>
     );

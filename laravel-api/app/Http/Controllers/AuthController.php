@@ -36,8 +36,10 @@ class AuthController extends Controller
 
         if(!$user || !Hash::check($request->password, $user->password)){
             return response()->json([
-                'status' => 'Unauthorized'
-            ], 401); 
+                'errors' => [
+                    'email' => ['The provided credentials are incorrect.']
+                ]
+            ], 422); 
         }
 
         $token = $user->createToken($user->name);
@@ -50,6 +52,7 @@ class AuthController extends Controller
 
     public function logout(Request $request)
     {
+        // return $request;
         $request->user()->tokens()->delete();
 
         return response()->json([

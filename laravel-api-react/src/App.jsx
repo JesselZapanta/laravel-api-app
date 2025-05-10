@@ -42,11 +42,11 @@ export default function App() {
 
                         <Route
                             path="/register"
-                            element={user.name ? <Home /> : <Register />}
+                            element={user ? <Home /> : <Register />}
                         />
                         <Route
                             path="/login"
-                            element={user.name ? <Home /> : <Login />}
+                            element={user ? <Home /> : <Login />}
                         />
                     </Route>
                 </Routes>

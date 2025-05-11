@@ -7,6 +7,7 @@ import Register from './Pages/Auth/Register';
 import Login from './Pages/Auth/Login';
 import { useContext } from 'react';
 import { AppContext } from './Context/AppContext';
+import Create from './Pages/Post/Create';
 
 export default function App() {
 
@@ -47,6 +48,11 @@ export default function App() {
                         <Route
                             path="/login"
                             element={user ? <Home /> : <Login />}
+                        />
+
+                        <Route
+                            path="/post"
+                            element={user ? <Create /> : <Login />}
                         />
                     </Route>
                 </Routes>

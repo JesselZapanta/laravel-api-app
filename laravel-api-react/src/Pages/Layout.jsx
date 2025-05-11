@@ -40,8 +40,15 @@ export default function Layout() {
                             <>
                                 <div className="text-slate-400 flex gap-4 items-center">
                                     <p>Welcome back {user.name}</p>
+                                    <Link to="post" className="nav-link">
+                                        New Posts
+                                    </Link>
                                     <form>
-                                        <button className="nav-link" onClick={handleLogout}>Log out</button>
+                                        <button
+                                            className="nav-link"
+                                            onClick={handleLogout}>
+                                            Log out
+                                        </button>
                                     </form>
                                 </div>
                             </>

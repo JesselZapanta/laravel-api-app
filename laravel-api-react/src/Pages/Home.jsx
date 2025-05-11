@@ -37,15 +37,24 @@ export default function Home() {
                                 <h3 className="text-2xl font-bold">
                                     {post.title}
                                 </h3>
-                                <div>
-                                  <Link to={`/posts/${post.id}`} className="bg-blue-500 text-white text-sm px-3 py-1 rounded-lg">Read More</Link>
-                                </div>
                             </div>
                             <p className="text-sm text-slate-600">
                                 Created by {post.user.name} on{" "}
                                 {new Date(post.created_at).toLocaleTimeString()}
                             </p>
                             <p>{post.body}</p>
+                            <div className="mt-2 flex justify-end gap-2">
+                                {/* <Link
+                                        to={`/`}
+                                        className="bg-emerald-500 text-white text-sm px-3 py-1 rounded-lg">
+                                        Edit
+                                    </Link> */}
+                                <Link
+                                    to={`/posts/show/${post.id}`}
+                                    className="bg-blue-500 text-white text-sm px-3 py-1 rounded-lg">
+                                    Read More
+                                </Link>
+                            </div>
                         </div>
                     ))
                 ) : (

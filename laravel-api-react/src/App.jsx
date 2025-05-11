@@ -8,6 +8,8 @@ import Login from './Pages/Auth/Login';
 import { useContext } from 'react';
 import { AppContext } from './Context/AppContext';
 import Create from './Pages/Post/Create';
+import Show from './Pages/Post/Show';
+import Update from './Pages/Post/Update';
 
 export default function App() {
 
@@ -51,9 +53,13 @@ export default function App() {
                         />
 
                         <Route
-                            path="/post"
+                            path="/post/:id?"//create update
                             element={user ? <Create /> : <Login />}
                         />
+
+                        <Route path="/posts/show/:id" element={<Show />} />
+
+                        <Route path="/posts/update/:id" element={<Update />} />
                     </Route>
                 </Routes>
             </BrowserRouter>

@@ -1,14 +1,16 @@
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { AppContext } from "../../Context/AppContext";
 
 export default function Show() {
     // console.log(useParams())
-    const { user } = useContext(AppContext);
+    const { user, token } = useContext(AppContext);
     const { id } = useParams();
     const [post, setPost] = useState([]);
     const [loading, setLoading] = useState(false);
+
+    const navigate = useNavigate();
 
     const getPost = async () => {
         setLoading(true);
@@ -25,6 +27,28 @@ export default function Show() {
     useEffect(() => {
         getPost();
     }, []);
+    
+    const handleDelete = async (id, e) => {
+        e.preventDefault();
+        console.log('dsadsa');
+        try{
+            const res = await axios.delete(`/api/posts/${id}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                }
+            });
+            if(res.status === 200){
+                //do sometjing
+                navigate("/");
+            }
+        }catch(err){
+            console.log(err);
+            if(err.status === 401){
+                navigate('/');
+            }
+        }
+    
+    }
 
     return (
         <div>
@@ -46,11 +70,15 @@ export default function Show() {
                         <div className="mt-4 flex justify-end gap-2">
                             {user && user.id === post.user_id && (
                                 <>
-                                    <Link
-                                        to={`/`}
-                                        className="bg-red-500 text-white text-sm px-3 py-1 rounded-lg">
-                                        Delete
-                                    </Link>
+                                    <form>
+                                        <button
+                                            onClick={(e) =>
+                                                handleDelete(post.id, e)
+                                            }
+                                            className="bg-red-500 text-white text-sm px-3 py-1 rounded-lg">
+                                            Delete
+                                        </button>
+                                    </form>
                                     <Link
                                         to={`/posts/update/${post.id}`}
                                         className="bg-green-500 text-white text-sm px-3 py-1 rounded-lg">

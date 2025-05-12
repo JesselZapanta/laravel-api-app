@@ -13,25 +13,6 @@ import Update from './Pages/Post/Update';
 
 export default function App() {
 
-// const [data, setData] = useState([])
-
-//   const getdata = async () => {
-//     try {
-//       const res = await axios.get('http://127.0.0.1:8000/api/posts');
-//       setData(res.data);
-
-//       if(res.status === 200){
-//         //do sometjing
-//       }
-//     }catch(err){
-//       console.log(err)
-//     }
-//   }
-
-//   useEffect(() => {
-//     getdata();
-//   })
-
     const {user} = useContext(AppContext);
 
     return (
